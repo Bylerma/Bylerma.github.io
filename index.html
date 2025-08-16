@@ -15,6 +15,26 @@
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
+  <!-- Scroll progress -->
+  <div id="scroll-progress" aria-hidden="true"></div>
+
+  <!-- Command palette -->
+  <div class="cmdk" id="cmdk" aria-hidden="true">
+    <div class="cmdk-backdrop" data-close></div>
+    <div class="cmdk-panel" role="dialog" aria-modal="true" aria-label="Command Palette">
+      <div class="cmdk-header">
+        <i class="fa-solid fa-magnifying-glass"></i>
+        <input id="cmdk-input" type="text" placeholder="Type a command or search... (Press Esc to close)" autocomplete="off" />
+        <kbd class="cmdk-kbd">Esc</kbd>
+      </div>
+      <div class="cmdk-list" id="cmdk-list" role="listbox" aria-label="Commands"></div>
+      <div class="cmdk-hint">
+        <span><kbd>↵</kbd> to run</span>
+        <span><kbd>↑</kbd><kbd>↓</kbd> to navigate</span>
+      </div>
+    </div>
+  </div>
+
   <!-- Header / Navbar -->
   <header class="navbar">
     <div class="nav-container">
@@ -36,6 +56,9 @@
           <i class="fa-solid fa-moon"></i>
           <i class="fa-solid fa-sun"></i>
         </button>
+        <button class="cmdk-toggle" id="cmdk-toggle" aria-label="Open command palette" title="Command Palette (Ctrl/⌘+K)">
+          <i class="fa-solid fa-terminal"></i>
+        </button>
         <button class="hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false" aria-controls="nav-links">
           <span></span><span></span><span></span>
         </button>
@@ -45,10 +68,11 @@
 
   <!-- Hero -->
   <section id="home" class="section hero">
+    <canvas id="hero-canvas" aria-hidden="true"></canvas>
     <div class="container hero-grid">
-      <div class="hero-content reveal">
+      <div class="hero-content" data-reveal="fade-up" data-stagger>
         <p class="eyebrow">CSE @ SRMCEM'27 • Campus Head</p>
-        <h1 class="hero-title">Hi, I'm <span class="gradient">Bhanu Pratap Singh</span></h1>
+        <h1 class="hero-title">Hi, I'm <span class="gradient gradient-anim">Bhanu Pratap Singh</span></h1>
         <p class="hero-subtitle">
           <span id="typewriter" class="typewriter" aria-live="polite">
             Passionate Coder • Open Source Enthusiast • Problem Solver
@@ -58,8 +82,8 @@
           Computer Science Engineering student with a focus on Python and open source development. I enjoy solving complex problems and turning ideas into impactful projects.
         </p>
         <div class="cta-row">
-          <a href="#contact" class="btn primary"><i class="fa-regular fa-paper-plane"></i> Get in Touch</a>
-          <a href="https://github.com/Bylerma" target="_blank" rel="noopener" class="btn ghost">
+          <a href="#contact" class="btn primary magnetic"><i class="fa-regular fa-paper-plane"></i> Get in Touch</a>
+          <a href="https://github.com/Bylerma" target="_blank" rel="noopener" class="btn ghost magnetic">
             <i class="fab fa-github"></i> GitHub
           </a>
         </div>
@@ -78,8 +102,10 @@
           </a>
         </div>
       </div>
-      <div class="hero-visual reveal">
-        <div class="orbit">
+
+      <div class="hero-visual tilt" data-reveal="fade-left">
+        <div class="blob"></div>
+        <div class="orbit parallax" data-depth="0.15">
           <div class="avatar">
             <i class="fa-regular fa-user"></i>
           </div>
@@ -88,17 +114,17 @@
           <span class="dot d3"></span>
         </div>
         <div class="glass-stats">
-          <div class="glass-card">
-            <span class="kpi">Python</span>
-            <span class="muted">Primary Stack</span>
+          <div class="glass-card counter" data-count="100">
+            <span class="kpi"><span class="count-num">0</span>+</span>
+            <span class="muted">Problems Solved</span>
           </div>
-          <div class="glass-card">
-            <span class="kpi">Open Source</span>
-            <span class="muted">Active Contributor</span>
+          <div class="glass-card counter" data-count="20">
+            <span class="kpi"><span class="count-num">0</span>+</span>
+            <span class="muted">Open Source PRs</span>
           </div>
-          <div class="glass-card">
-            <span class="kpi">Leadership</span>
-            <span class="muted">Campus Head</span>
+          <div class="glass-card counter" data-count="5">
+            <span class="kpi"><span class="count-num">0</span>+</span>
+            <span class="muted">Projects</span>
           </div>
         </div>
       </div>
@@ -109,9 +135,9 @@
   <!-- About -->
   <section id="about" class="section">
     <div class="container">
-      <h2 class="section-title reveal">About Me</h2>
+      <h2 class="section-title" data-reveal="fade-up">About Me</h2>
       <div class="about-grid">
-        <div class="about-text reveal">
+        <div class="about-text" data-reveal="fade-right" data-stagger>
           <h3>Campus Head & Technology Enthusiast</h3>
           <p>
             I'm pursuing Computer Science Engineering at SRMCEM (Class of 2027) and serve as an Official Campus Representative. My journey in technology began at DPS with a foundation in Physics, Chemistry, and Mathematics.
@@ -120,37 +146,37 @@
             I'm constantly exploring new technologies and contributing to open source. My expertise lies in Python programming, and I enjoy tackling challenging problems that create real value.
           </p>
           <div class="stats-row">
-            <div class="stat">
+            <div class="stat tilt">
               <span class="stat-label">Education</span>
               <span class="stat-value">SRMCEM'27 CSE</span>
             </div>
-            <div class="stat">
+            <div class="stat tilt">
               <span class="stat-label">Focus</span>
               <span class="stat-value">Python Development</span>
             </div>
-            <div class="stat">
+            <div class="stat tilt">
               <span class="stat-label">Role</span>
               <span class="stat-value">Campus Head</span>
             </div>
           </div>
         </div>
 
-        <div class="about-cards reveal">
-          <div class="info-card">
+        <div class="about-cards" data-reveal="fade-left" data-stagger>
+          <div class="info-card tilt">
             <i class="fa-solid fa-bolt"></i>
             <div>
               <h4>Problem Solving</h4>
               <p>Strong analytical skills and algorithmic thinking.</p>
             </div>
           </div>
-          <div class="info-card">
+          <div class="info-card tilt">
             <i class="fa-solid fa-diagram-project"></i>
             <div>
               <h4>Version Control</h4>
               <p>Proficient with Git and GitHub for collaboration.</p>
             </div>
           </div>
-          <div class="info-card">
+          <div class="info-card tilt">
             <i class="fa-solid fa-book-open"></i>
             <div>
               <h4>Continuous Learning</h4>
@@ -165,9 +191,9 @@
   <!-- Skills -->
   <section id="skills" class="section alt">
     <div class="container">
-      <h2 class="section-title reveal">Skills & Technologies</h2>
+      <h2 class="section-title" data-reveal="fade-up">Skills & Technologies</h2>
 
-      <div class="chip-cloud reveal">
+      <div class="chip-cloud" data-reveal="fade-up" data-stagger>
         <span class="chip">Python</span>
         <span class="chip">Git</span>
         <span class="chip">GitHub</span>
@@ -179,24 +205,42 @@
         <span class="chip">Teamwork</span>
       </div>
 
-      <div class="skill-bars reveal">
-        <div class="bar">
-          <div class="bar-top">
-            <span>Python</span><span class="bar-value">Advanced</span>
+      <div class="radial-grid" data-reveal="fade-up" data-stagger>
+        <div class="radial" data-val="88">
+          <div class="radial-inner">
+            <span class="radial-num">88%</span>
+            <span class="radial-label">Python</span>
           </div>
-          <div class="bar-track"><span class="bar-fill" style="--p: 88%"></span></div>
         </div>
-        <div class="bar">
-          <div class="bar-top">
-            <span>Problem Solving</span><span class="bar-value">Advanced</span>
+        <div class="radial" data-val="85">
+          <div class="radial-inner">
+            <span class="radial-num">85%</span>
+            <span class="radial-label">Problem Solving</span>
           </div>
-          <div class="bar-track"><span class="bar-fill" style="--p: 85%"></span></div>
         </div>
-        <div class="bar">
-          <div class="bar-top">
-            <span>Version Control</span><span class="bar-value">Proficient</span>
+        <div class="radial" data-val="80">
+          <div class="radial-inner">
+            <span class="radial-num">80%</span>
+            <span class="radial-label">Version Control</span>
           </div>
-          <div class="bar-track"><span class="bar-fill" style="--p: 80%"></span></div>
+        </div>
+        <div class="radial" data-val="72">
+          <div class="radial-inner">
+            <span class="radial-num">72%</span>
+            <span class="radial-label">Web</span>
+          </div>
+        </div>
+        <div class="radial" data-val="70">
+          <div class="radial-inner">
+            <span class="radial-num">70%</span>
+            <span class="radial-label">Open Source</span>
+          </div>
+        </div>
+        <div class="radial" data-val="76">
+          <div class="radial-inner">
+            <span class="radial-num">76%</span>
+            <span class="radial-label">Data Structures</span>
+          </div>
         </div>
       </div>
     </div>
@@ -205,44 +249,61 @@
   <!-- Projects -->
   <section id="projects" class="section">
     <div class="container">
-      <h2 class="section-title reveal">Featured Projects</h2>
+      <h2 class="section-title" data-reveal="fade-up">Featured Projects</h2>
 
-      <div class="cards-grid">
-        <article class="card project reveal">
-          <div class="card-head">
-            <h3>LinkedIn Badge</h3>
-            <a href="https://github.com/Bylerma/linkedin-badge" target="_blank" rel="noopener" class="icon-link" aria-label="GitHub Repo">
-              <i class="fab fa-github"></i>
-            </a>
-          </div>
-          <p>A project for creating and managing LinkedIn badges and professional networking tools.</p>
-          <div class="tags">
-            <span>Python</span><span>Web</span>
-          </div>
-        </article>
+      <div class="carousel" data-reveal="fade-up">
+        <button class="carousel-btn prev" aria-label="Previous projects"><i class="fa-solid fa-chevron-left"></i></button>
+        <div class="carousel-track" id="projects-track" tabindex="0" aria-label="Projects">
+          <article class="card project tilt">
+            <div class="card-head">
+              <h3>LinkedIn Badge</h3>
+              <a href="https://github.com/Bylerma/linkedin-badge" target="_blank" rel="noopener" class="icon-link" aria-label="GitHub Repo">
+                <i class="fab fa-github"></i>
+              </a>
+            </div>
+            <p>A project for creating and managing LinkedIn badges and professional networking tools.</p>
+            <div class="tags">
+              <span>Python</span><span>Web</span>
+            </div>
+          </article>
 
-        <article class="card project reveal">
-          <div class="card-head">
-            <h3>Open Source Contributions</h3>
-            <a href="https://github.com/Bylerma" target="_blank" rel="noopener" class="icon-link" aria-label="GitHub Profile">
-              <i class="fab fa-github"></i>
-            </a>
-          </div>
-          <p>Various contributions to open source projects and personal repositories showcasing coding skills.</p>
-          <div class="tags">
-            <span>Python</span><span>Open Source</span>
-          </div>
-        </article>
+          <article class="card project tilt">
+            <div class="card-head">
+              <h3>Open Source Contributions</h3>
+              <a href="https://github.com/Bylerma" target="_blank" rel="noopener" class="icon-link" aria-label="GitHub Profile">
+                <i class="fab fa-github"></i>
+              </a>
+            </div>
+            <p>Various contributions to open source projects and personal repositories showcasing coding skills.</p>
+            <div class="tags">
+              <span>Python</span><span>Open Source</span>
+            </div>
+          </article>
 
-        <article class="card project reveal">
-          <div class="card-head">
-            <h3>Campus Projects</h3>
-          </div>
-          <p>Academic and extracurricular projects developed during my time at SRMCEM.</p>
-          <div class="tags">
-            <span>Computer Science</span><span>Leadership</span>
-          </div>
-        </article>
+          <article class="card project tilt">
+            <div class="card-head">
+              <h3>Campus Projects</h3>
+            </div>
+            <p>Academic and extracurricular projects developed during my time at SRMCEM.</p>
+            <div class="tags">
+              <span>Computer Science</span><span>Leadership</span>
+            </div>
+          </article>
+
+          <article class="card project tilt">
+            <div class="card-head">
+              <h3>Portfolio Website</h3>
+              <a href="https://bylerma.github.io/" target="_blank" rel="noopener" class="icon-link" aria-label="Live Site">
+                <i class="fa-solid fa-arrow-up-right-from-square"></i>
+              </a>
+            </div>
+            <p>Responsive, animated portfolio built with vanilla HTML, CSS, and JS—no frameworks.</p>
+            <div class="tags">
+              <span>Animations</span><span>Accessibility</span>
+            </div>
+          </article>
+        </div>
+        <button class="carousel-btn next" aria-label="Next projects"><i class="fa-solid fa-chevron-right"></i></button>
       </div>
     </div>
   </section>
@@ -250,9 +311,9 @@
   <!-- Contact -->
   <section id="contact" class="section alt">
     <div class="container">
-      <h2 class="section-title reveal">Get In Touch</h2>
+      <h2 class="section-title" data-reveal="fade-up">Get In Touch</h2>
       <div class="contact-grid">
-        <div class="contact-info reveal">
+        <div class="contact-info" data-reveal="fade-right" data-stagger>
           <h3>Let's Connect!</h3>
           <p>
             I'm always interested in discussing new opportunities, collaborating on projects, or chatting about technology and programming.
@@ -277,7 +338,7 @@
           </div>
         </div>
 
-        <form class="contact-form reveal" id="contact-form" novalidate>
+        <form class="contact-form" id="contact-form" novalidate data-reveal="fade-left" data-stagger>
           <div class="field">
             <label for="name">Name</label>
             <input id="name" name="name" type="text" placeholder="Your name" required />
@@ -293,7 +354,7 @@
             <textarea id="message" name="message" rows="5" placeholder="How can I help?" required></textarea>
             <span class="error" data-for="message"></span>
           </div>
-          <button type="submit" class="btn primary w-100">Send Message</button>
+          <button type="submit" class="btn primary w-100 magnetic">Send Message</button>
           <p class="form-status" id="form-status" role="status" aria-live="polite"></p>
         </form>
       </div>
