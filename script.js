@@ -78,7 +78,7 @@ function tick(){
   }else{
     ci--;
     typeEl.textContent = current.slice(0, ci);
-    if(ci === 0){deleting = false; pi++; setTimeout(tick, 250); return;}
+    if(ci === 0){deleting = true; pi++; setTimeout(tick, 250); return;}
     setTimeout(tick, 35);
   }
 }
