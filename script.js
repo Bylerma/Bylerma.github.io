@@ -8,6 +8,33 @@ document.getElementById('theme-toggle')?.addEventListener('click', () => {
   document.body.classList.toggle('light');
   localStorage.setItem('theme', document.body.classList.contains('light') ? 'light' : 'dark');
 });
+// Add this to your existing script.js file
+
+// Theme-aware badge switching
+function updateBadgeThemes() {
+  const isDark = !document.body.classList.contains('light');
+  const badges = document.querySelectorAll('.badge-img[data-dark-src]');
+  
+  badges.forEach(badge => {
+    const lightSrc = badge.getAttribute('src');
+    const darkSrc = badge.getAttribute('data-dark-src');
+    
+    if (isDark && darkSrc) {
+      badge.src = darkSrc;
+    } else {
+      badge.src = lightSrc;
+    }
+  });
+}
+
+// Update badges when theme changes
+document.getElementById('theme-toggle')?.addEventListener('click', () => {
+  // Wait a tick for the theme class to be applied
+  setTimeout(updateBadgeThemes, 0);
+});
+
+// Initialize badge themes on page load
+document.addEventListener('DOMContentLoaded', updateBadgeThemes);
 
 // Mobile nav
 const hamburger = document.getElementById('hamburger');
