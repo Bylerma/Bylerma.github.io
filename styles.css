@@ -148,7 +148,224 @@ body.light .theme-toggle .fa-sun{transform: translateY(0); opacity:1}
 }
 }
 /* Add this somewhere after .avatar styles */
+/* Coding Journey Section Styles */
+#coding {
+  background: var(--section-bg);
+  position: relative;
+}
 
+.coding-intro {
+  text-align: center;
+  margin-bottom: 3rem;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.coding-intro p {
+  font-size: 1.125rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+.coding-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 2rem;
+  align-items: start;
+}
+
+.coding-card {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 16px;
+  padding: 1.5rem;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.coding-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+  border-color: var(--primary);
+}
+
+.coding-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 1.5rem;
+}
+
+.platform-info {
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+}
+
+.platform-icon {
+  font-size: 1.5rem;
+  color: var(--primary);
+  flex-shrink: 0;
+}
+
+.coding-header h3 {
+  margin: 0 0 0.25rem 0;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.coding-header p {
+  margin: 0;
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+}
+
+.external-link {
+  color: var(--text-secondary);
+  font-size: 1rem;
+  text-decoration: none;
+  transition: color 0.2s ease;
+  flex-shrink: 0;
+}
+
+.external-link:hover {
+  color: var(--primary);
+}
+
+.coding-stats {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.stat-item {
+  text-align: center;
+  padding: 0.75rem;
+  background: var(--section-bg);
+  border-radius: 8px;
+  border: 1px solid var(--card-border);
+}
+
+.stat-number {
+  display: block;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--primary);
+  margin-bottom: 0.25rem;
+}
+
+.stat-label {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.badge-img {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+  background: #fff;
+  transition: opacity 0.3s ease;
+}
+
+.leetcode-badge,
+.github-badge,
+.languages-badge {
+  margin-top: 1rem;
+}
+
+.achievement-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+
+.achievement {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem;
+  background: var(--section-bg);
+  border-radius: 6px;
+  border: 1px solid var(--card-border);
+}
+
+.achievement i {
+  color: var(--primary);
+  font-size: 0.875rem;
+}
+
+.achievement span {
+  font-size: 0.875rem;
+  color: var(--text-primary);
+  font-weight: 500;
+}
+
+/* Platform specific styling */
+.coding-card.leetcode {
+  border-left: 4px solid #FFA116;
+}
+
+.coding-card.github {
+  border-left: 4px solid #333;
+}
+
+.coding-card.languages {
+  border-left: 4px solid #0366d6;
+}
+
+.coding-card.other {
+  border-left: 4px solid #28a745;
+}
+
+/* Dark mode badge switching */
+body.light .badge-img[data-dark-src] {
+  content: attr(src);
+}
+
+body:not(.light) .badge-img[data-dark-src] {
+  content: attr(data-dark-src);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .coding-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+  
+  .coding-stats {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+  }
+  
+  .stat-number {
+    font-size: 1.25rem;
+  }
+  
+  .coding-card {
+    padding: 1.25rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .platform-info {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+  
+  .coding-header {
+    flex-direction: column;
+    gap: 1rem;
+  }
+}
 .dot{
   position:absolute; width:10px; height:10px; border-radius:50%;
   background: linear-gradient(90deg, var(--accent), var(--accent-2));
