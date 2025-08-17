@@ -65,20 +65,19 @@ const phrases = [
   'Problem Solver',
   'Python Developer'
   ];
-.hero-subtitle { white-space: nowrap; }
 let pi = 0, ci = 0, deleting = false;
 function tick(){
   if(!typeEl) return;
   const current = phrases[pi % phrases.length];
-  if(!deleting){
+   if(!deleting){
     ci++;
     typeEl.textContent = current.slice(0, ci);
-    if(ci === current.length){deleting = true; setTimeout(tick, 1200); return;}
+    if(ci === current.length){deleting = false; setTimeout(tick, 1200); return;}
     setTimeout(tick, 70);
   }else{
     ci--;
     typeEl.textContent = current.slice(0, ci);
-    if(ci === 0){deleting = true; pi++; setTimeout(tick, 250); return;}
+    if(ci === 0){deleting = false; pi++; setTimeout(tick, 250); return;}
     setTimeout(tick, 35);
   }
 }
