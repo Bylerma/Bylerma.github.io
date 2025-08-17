@@ -240,13 +240,97 @@ body.light .theme-toggle .fa-sun{transform: translateY(0); opacity:1}
 .contact-form{
   background: var(--bg-elev); border:1px solid var(--stroke); border-radius:16px; padding:18px;
 }
-.field{display:grid; gap:6px; margin-bottom:12px}
-.field input, .field textarea{
-  width:100%; padding:12px 12px; border-radius:10px; border:1px solid var(--stroke);
-  background: rgba(148,163,184,.06); color:var(--text); outline:none;
+.field{display:grid; gap:6px; margin-bottom:16px}
+.field label{
+  font-weight:600; color:var(--text); display:flex; align-items:center; gap:4px;
 }
-.field input:focus, .field textarea:focus{border-color: color-mix(in oklab, var(--accent), var(--stroke))}
-.error{color:#ef4444; font-size:.85rem; min-height:1.1em}
+.field .required{
+  color:#ef4444; font-size:.9em;
+}
+.field .optional{
+  color:var(--muted); font-size:.85em; font-weight:400;
+}
+.field input, .field textarea, .field select{
+  width:100%; padding:12px 14px; border-radius:10px; border:1px solid var(--stroke);
+  background: rgba(148,163,184,.06); color:var(--text); outline:none;
+  font-family: inherit; font-size: inherit;
+  transition: all 0.2s ease;
+}
+.field input:focus, .field textarea:focus, .field select:focus{
+  border-color: var(--accent); 
+  background: rgba(148,163,184,.08);
+  box-shadow: 0 0 0 3px color-mix(in oklab, var(--accent), transparent 85%);
+}
+.field input:invalid:not(:focus):not(:placeholder-shown),
+.field textarea:invalid:not(:focus):not(:placeholder-shown),
+.field select:invalid:not(:focus) {
+  border-color: #ef4444;
+}
+.field select{
+  cursor: pointer;
+  background-image: url('data:image/svg+xml;charset=UTF-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="%23949fb8" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>');
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  background-size: 16px;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+}
+.error{
+  color:#ef4444; font-size:.85rem; min-height:1.2em; 
+  opacity: 0; transform: translateY(-4px); transition: all 0.2s ease;
+}
+.error:not(:empty){
+  opacity: 1; transform: translateY(0);
+}
+
+/* Enhanced button with loading state */
+.btn {
+  position: relative; overflow: hidden;
+}
+.btn-spinner{
+  display: none; width: 18px; height: 18px; 
+  border: 2px solid transparent;
+  border-top: 2px solid currentColor;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+.btn.loading .btn-text{
+  opacity: 0.7;
+}
+.btn.loading .btn-spinner{
+  display: inline-block;
+}
+.btn:disabled{
+  opacity: 0.7; cursor: not-allowed;
+}
+
+/* Form status messages */
+.form-status{
+  margin-top: 16px; padding: 12px 16px; border-radius: 10px;
+  font-weight: 500; text-align: center;
+  opacity: 0; transform: translateY(-4px); transition: all 0.3s ease;
+  min-height: 20px;
+}
+.form-status:not(:empty){
+  opacity: 1; transform: translateY(0);
+}
+.form-status.success{
+  background: color-mix(in oklab, #10b981, transparent 85%);
+  color: #10b981; border: 1px solid color-mix(in oklab, #10b981, transparent 70%);
+}
+.form-status.error{
+  background: color-mix(in oklab, #ef4444, transparent 85%);
+  color: #ef4444; border: 1px solid color-mix(in oklab, #ef4444, transparent 70%);
+}
+.form-status.info{
+  background: color-mix(in oklab, var(--accent-2), transparent 85%);
+  color: var(--accent-2); border: 1px solid color-mix(in oklab, var(--accent-2), transparent 70%);
+}
+
+@keyframes spin{
+  to { transform: rotate(360deg); }
+}
 /* Add (or keep) your existing styles above. This only adds the honeypot hider. */
 
 .hp{
@@ -284,6 +368,14 @@ body.light .theme-toggle .fa-sun{transform: translateY(0); opacity:1}
 @media (max-width: 980px){
   .hero-grid, .about-grid, .contact-grid{grid-template-columns: 1fr}
   .cards-grid{grid-template-columns: 1fr 1fr}
+  
+  /* Enhanced form responsiveness */
+  .contact-form{
+    padding: 16px;
+  }
+  .field input, .field textarea, .field select{
+    padding: 10px 12px;
+  }
 }
 @media (max-width: 680px){
   .nav-links{
@@ -295,6 +387,18 @@ body.light .theme-toggle .fa-sun{transform: translateY(0); opacity:1}
   .hamburger{display:grid}
   .cards-grid{grid-template-columns: 1fr}
   .glass-stats{grid-template-columns: 1fr 1fr}
+  
+  /* Mobile form adjustments */
+  .contact-form{
+    padding: 14px;
+  }
+  .field input, .field textarea, .field select{
+    padding: 10px;
+    font-size: 16px; /* Prevent zoom on iOS */
+  }
+  .contact-grid{
+    gap: 20px;
+  }
 }
 
 /* Reduce motion */
