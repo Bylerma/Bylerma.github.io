@@ -1,3 +1,6 @@
+// Reserve scrollbar space to prevent layout shift when scrollbars appear/disappear (where supported)
+try { document.documentElement.style.setProperty('scrollbar-gutter', 'stable both-edges'); } catch {}
+
 // Theme toggle (dark <-> light) with localStorage
 (function themeInit(){
   const prefersLight = window.matchMedia('(prefers-color-scheme: light)').matches;
@@ -17,7 +20,24 @@ hamburger?.addEventListener('click', () => {
   hamburger.setAttribute('aria-expanded', String(open));
 });
 navLinks?.querySelectorAll('a').forEach(a => {
-  a.addEventListener('click', () => navLinks.classList.remove('open'));
+  a.addEventListener('click', (e) => {
+    // Close menu first
+    navLinks.classList.remove('open');
+    hamburger?.setAttribute('aria-expanded', 'false');
+
+    // Smooth-scroll to in-page anchors without abrupt jumps under sticky headers
+    const href = a.getAttribute('href') || '';
+    if(href.startsWith('#')){
+      e.preventDefault();
+      const target = document.getElementById(href.slice(1));
+      if(target){
+        const headerH = document.querySelector('header')?.offsetHeight || 0;
+        const top = target.getBoundingClientRect().top + window.scrollY - headerH - 8;
+        window.scrollTo({ top, behavior: 'smooth' });
+        history.pushState(null, '', href);
+      }
+    }
+  });
 });
 
 // Smooth scroll active link highlighting
@@ -64,7 +84,33 @@ const phrases = [
   'Open Source Enthusiast',
   'Problem Solver',
   'Python Developer'
-  ];
+];
+
+// Prevent layout shifting by reserving width for the widest phrase
+(function reserveTypewriterWidth(){
+  if(!typeEl || !phrases.length) return;
+  const meas = document.createElement('span');
+  // Copy relevant typography from target
+  const cs = getComputedStyle(typeEl);
+  meas.style.position = 'absolute';
+  meas.style.visibility = 'hidden';
+  meas.style.whiteSpace = 'pre';
+  meas.style.fontFamily = cs.fontFamily;
+  meas.style.fontSize = cs.fontSize;
+  meas.style.fontWeight = cs.fontWeight;
+  meas.style.letterSpacing = cs.letterSpacing;
+  meas.style.textTransform = cs.textTransform;
+  document.body.appendChild(meas);
+  let maxW = 0;
+  for(const p of phrases){
+    meas.textContent = p;
+    maxW = Math.max(maxW, meas.getBoundingClientRect().width);
+  }
+  document.body.removeChild(meas);
+  typeEl.style.display = 'inline-block';
+  typeEl.style.minWidth = Math.ceil(maxW) + 'px';
+})();
+
 let pi = 0, ci = 0, deleting = false;
 function tick(){
   if(!typeEl) return;
