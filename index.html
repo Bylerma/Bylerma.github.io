@@ -318,29 +318,68 @@
           </div>
         </div>
 
-        <form class="contact-form" id="contact-form" novalidate data-reveal="fade-left" data-stagger>
-          <div class="field">
-            <label for="name">Name</label>
-            <input id="name" name="name" type="text" placeholder="Your name" required />
-            <span class="error" data-for="name"></span>
-          </div>
-          <div class="field">
-            <label for="email">Email</label>
-            <input id="email" name="email" type="email" placeholder="you@example.com" required />
-            <span class="error" data-for="email"></span>
-          </div>
-          <div class="field">
-            <label for="message">Message</label>
-            <textarea id="message" name="message" rows="5" placeholder="How can I help?" required></textarea>
-            <span class="error" data-for="message"></span>
-          </div>
-          <button type="submit" class="btn primary w-100 magnetic">Send Message</button>
-          <p class="form-status" id="form-status" role="status" aria-live="polite"></p>
-        </form>
+       <!-- Contact -->
+<section id="contact" class="section alt">
+  <div class="container">
+    <h2 class="section-title reveal">Get In Touch</h2>
+    <div class="contact-grid">
+      <div class="contact-info reveal">
+        <h3>Let's Connect!</h3>
+        <p>
+          I'm always interested in discussing new opportunities, collaborating on projects, or chatting about technology and programming.
+        </p>
+        <div class="contact-links">
+          <a href="https://www.linkedin.com/in/bylerma/" target="_blank" rel="noopener" class="contact-link">
+            <i class="fab fa-linkedin"></i>
+            <span>LinkedIn</span>
+          </a>
+          <a href="https://github.com/Bylerma" target="_blank" rel="noopener" class="contact-link">
+            <i class="fab fa-github"></i>
+            <span>GitHub</span>
+          </a>
+          <a href="https://linktr.ee/bylerma" target="_blank" rel="noopener" class="contact-link">
+            <i class="fas fa-link"></i>
+            <span>Linktree</span>
+          </a>
+          <a href="mailto:contact@example.com" class="contact-link">
+            <i class="fas fa-envelope"></i>
+            <span>Email</span>
+          </a>
+        </div>
       </div>
-    </div>
-  </section>
 
+      <!-- IMPORTANT: Update YOUR_FORM_ID below with your Formspree ID -->
+      <form
+        class="contact-form reveal"
+        id="contact-form"
+        action="https://formspree.io/f/movlzlao"
+        method="POST"
+        novalidate
+      >
+        <!-- Honeypot field (spam protection) -->
+        <input type="text" name="_gotcha" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true" />
+
+        <div class="field">
+          <label for="name">Name</label>
+          <input id="name" name="name" type="text" placeholder="Your name" required />
+          <span class="error" data-for="name"></span>
+        </div>
+        <div class="field">
+          <label for="email">Email</label>
+          <input id="email" name="email" type="email" placeholder="you@example.com" required />
+          <span class="error" data-for="email"></span>
+        </div>
+        <div class="field">
+          <label for="message">Message</label>
+          <textarea id="message" name="message" rows="5" placeholder="How can I help?" required></textarea>
+          <span class="error" data-for="message"></span>
+        </div>
+        <button type="submit" class="btn primary w-100" id="contact-submit">Send Message</button>
+        <p class="form-status" id="form-status" role="status" aria-live="polite"></p>
+      </form>
+    </div>
+  </div>
+</section>
   <!-- Footer -->
   <footer class="footer">
     <div class="container footer-inner">
