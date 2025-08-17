@@ -225,15 +225,12 @@ const form = document.getElementById('contact-form');
 const statusEl = document.getElementById('form-status');
 const submitBtn = document.getElementById('contact-submit');
 
-// Use the action as the endpoint (good fallback if JS is disabled)
-const FORMSPREE_ENDPOINT = form?.getAttribute('action') || '';
-
-function setErr(id, msg){
+function setErr(id, msg) {
   const err = document.querySelector(`.error[data-for="${id}"]`);
-  if(err) err.textContent = msg || '';
+  if (err) err.textContent = msg || '';
 }
 
-form?.addEventListener('submit', async e => {
+form?.addEventListener('submit', async (e) => {
   e.preventDefault();
 
   // Honeypot: if filled, silently ignore (likely a bot)
@@ -242,54 +239,61 @@ form?.addEventListener('submit', async e => {
     return;
   }
 
-  let ok = true;
-  const name = form.name.value.trim();
-  const email = form.email.value.trim();
-  const message = form.message.value.trim();
+  // Read inputs safely by ID (avoid form.name collision with HTMLFormElement.name)
+  const nameVal = document.getElementById('name')?.value?.trim() ?? '';
+  const emailVal = document.getElementById('email')?.value?.trim() ?? '';
+  const messageVal = document.getElementById('message')?.value?.trim() ?? '';
 
+  // Clear previous errors
   setErr('name'); setErr('email'); setErr('message');
 
-  if(name.length < 2){ setErr('name', 'Please enter your name.'); ok = false; }
-  if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){ setErr('email', 'Enter a valid email.'); ok = false; }
-  if(message.length < 10){ setErr('message', 'Message should be at least 10 characters.'); ok = false; }
+  // Validate
+  let ok = true;
+  if (nameVal.length < 2) { setErr('name', 'Please enter your name.'); ok = false; }
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailVal)) { setErr('email', 'Enter a valid email.'); ok = false; }
+  if (messageVal.length < 10) { setErr('message', 'Message should be at least 10 characters.'); ok = false; }
+  if (!ok) return;
 
-  if(!ok) return;
-
-  if(!FORMSPREE_ENDPOINT){
-    statusEl.textContent = 'Form endpoint not configured.';
+  // Use the current form action as endpoint each submit
+  const endpoint = form.getAttribute('action');
+  if (!endpoint) {
+    if (statusEl) statusEl.textContent = 'Form endpoint not configured.';
     return;
   }
 
-  // Submit to Formspree
-  try{
-    submitBtn.disabled = true;
-    statusEl.textContent = 'Sending...';
+  try {
+    if (submitBtn) submitBtn.disabled = true;
+    if (statusEl) statusEl.textContent = 'Sending...';
 
     const formData = new FormData(form);
-    const res = await fetch(FORMSPREE_ENDPOINT, {
+    // Ensure expected field names exist in FormData
+    formData.set('name', nameVal);
+    formData.set('email', emailVal);
+    formData.set('message', messageVal);
+
+    const res = await fetch(endpoint, {
       method: 'POST',
       headers: { 'Accept': 'application/json' },
       body: formData
     });
 
-    if(res.ok){
-      statusEl.textContent = 'Thanks! Your message has been sent.';
+    if (res.ok) {
+      if (statusEl) statusEl.textContent = 'Thanks! Your message has been sent.';
       form.reset();
-    }else{
-      // Try to parse error, otherwise generic
+    } else {
       let msg = 'Something went wrong. Please try again later.';
-      try{
+      try {
         const data = await res.json();
-        if(data && data.errors && data.errors.length){
+        if (data?.errors?.length) {
           msg = data.errors.map(e => e.message).join(', ');
         }
-      }catch(_) {}
-      statusEl.textContent = msg;
+      } catch (_) {}
+      if (statusEl) statusEl.textContent = msg;
     }
-  }catch(err){
-    statusEl.textContent = 'Network error. Please check your connection and try again.';
-  }finally{
-    submitBtn.disabled = false;
+  } catch (err) {
+    if (statusEl) statusEl.textContent = 'Network error. Please try again.';
+  } finally {
+    if (submitBtn) submitBtn.disabled = false;
   }
 });
 
