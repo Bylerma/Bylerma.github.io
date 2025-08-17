@@ -64,6 +64,7 @@ const phrases = [
   'Open Source Enthusiast',
   'Problem Solver',
   'Python Developer'
+  '                 '
 ];
 let pi = 0, ci = 0, deleting = false;
 function tick(){
