@@ -1,6 +1,3 @@
-// Reserve scrollbar space to prevent layout shift when scrollbars appear/disappear (where supported)
-try { document.documentElement.style.setProperty('scrollbar-gutter', 'stable both-edges'); } catch {}
-
 // Theme toggle (dark <-> light) with localStorage
 (function themeInit(){
   const prefersLight = window.matchMedia('(prefers-color-scheme: light)').matches;
@@ -20,24 +17,7 @@ hamburger?.addEventListener('click', () => {
   hamburger.setAttribute('aria-expanded', String(open));
 });
 navLinks?.querySelectorAll('a').forEach(a => {
-  a.addEventListener('click', (e) => {
-    // Close menu first
-    navLinks.classList.remove('open');
-    hamburger?.setAttribute('aria-expanded', 'false');
-
-    // Smooth-scroll to in-page anchors without abrupt jumps under sticky headers
-    const href = a.getAttribute('href') || '';
-    if(href.startsWith('#')){
-      e.preventDefault();
-      const target = document.getElementById(href.slice(1));
-      if(target){
-        const headerH = document.querySelector('header')?.offsetHeight || 0;
-        const top = target.getBoundingClientRect().top + window.scrollY - headerH - 8;
-        window.scrollTo({ top, behavior: 'smooth' });
-        history.pushState(null, '', href);
-      }
-    }
-  });
+  a.addEventListener('click', () => navLinks.classList.remove('open'));
 });
 
 // Smooth scroll active link highlighting
@@ -86,29 +66,56 @@ const phrases = [
   'Python Developer'
 ];
 
-// Prevent layout shifting by reserving width for the widest phrase
-(function reserveTypewriterWidth(){
+// Prevent layout shift by reserving width for the widest phrase
+(function initTypewriterWidthReservation(){
   if(!typeEl || !phrases.length) return;
-  const meas = document.createElement('span');
-  // Copy relevant typography from target
-  const cs = getComputedStyle(typeEl);
-  meas.style.position = 'absolute';
-  meas.style.visibility = 'hidden';
-  meas.style.whiteSpace = 'pre';
-  meas.style.fontFamily = cs.fontFamily;
-  meas.style.fontSize = cs.fontSize;
-  meas.style.fontWeight = cs.fontWeight;
-  meas.style.letterSpacing = cs.letterSpacing;
-  meas.style.textTransform = cs.textTransform;
-  document.body.appendChild(meas);
-  let maxW = 0;
-  for(const p of phrases){
-    meas.textContent = p;
-    maxW = Math.max(maxW, meas.getBoundingClientRect().width);
+
+  // Simple debounce to avoid excessive re-measures on resize
+  const debounce = (fn, ms=150) => {
+    let t; return (...args) => { clearTimeout(t); t = setTimeout(() => fn(...args), ms); };
+  };
+
+  function reserveWidth(){
+    // Create a hidden measuring element with the same typography as #typewriter
+    const meas = document.createElement('span');
+    const cs = getComputedStyle(typeEl);
+    meas.style.position = 'absolute';
+    meas.style.visibility = 'hidden';
+    meas.style.whiteSpace = 'pre'; // match typing behavior
+    meas.style.fontFamily = cs.fontFamily;
+    meas.style.fontSize = cs.fontSize;
+    meas.style.fontWeight = cs.fontWeight;
+    meas.style.letterSpacing = cs.letterSpacing;
+    meas.style.textTransform = cs.textTransform;
+    meas.style.lineHeight = cs.lineHeight;
+
+    document.body.appendChild(meas);
+
+    let maxW = 0;
+    for(const p of phrases){
+      meas.textContent = p;
+      const w = meas.getBoundingClientRect().width;
+      if(w > maxW) maxW = w;
+    }
+    meas.remove();
+
+    // Reserve at least the max width so the container doesn't change size while typing
+    typeEl.style.display = 'inline-block';
+    typeEl.style.whiteSpace = 'pre';
+    typeEl.style.minWidth = Math.ceil(maxW) + 'px';
   }
-  document.body.removeChild(meas);
-  typeEl.style.display = 'inline-block';
-  typeEl.style.minWidth = Math.ceil(maxW) + 'px';
+
+  reserveWidth();
+
+  // Recalculate after web fonts load (if any), on resize, and after theme toggles (fonts/weights might differ)
+  if(document.fonts && document.fonts.ready){
+    document.fonts.ready.then(reserveWidth).catch(()=>{});
+  }
+  window.addEventListener('resize', debounce(reserveWidth, 150));
+  document.getElementById('theme-toggle')?.addEventListener('click', () => {
+    // Wait a tick for class changes to apply styles, then measure
+    setTimeout(reserveWidth, 0);
+  });
 })();
 
 let pi = 0, ci = 0, deleting = false;
