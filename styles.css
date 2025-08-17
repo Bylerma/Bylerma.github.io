@@ -247,6 +247,16 @@ body.light .theme-toggle .fa-sun{transform: translateY(0); opacity:1}
 }
 .field input:focus, .field textarea:focus{border-color: color-mix(in oklab, var(--accent), var(--stroke))}
 .error{color:#ef4444; font-size:.85rem; min-height:1.1em}
+/* Add (or keep) your existing styles above. This only adds the honeypot hider. */
+
+.hp{
+  position: absolute;
+  left: -5000px;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  pointer-events: none;
+}
 
 /* Footer */
 .footer{border-top:1px solid var(--stroke); padding:20px 0; background: color-mix(in oklab, var(--bg-elev), transparent 10%)}
