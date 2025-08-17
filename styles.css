@@ -140,6 +140,14 @@ body.light .theme-toggle .fa-sun{transform: translateY(0); opacity:1}
   border:1px solid var(--stroke);
   box-shadow: var(--shadow);
 }
+/* Add this somewhere after .avatar styles */
+.avatar img{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+  display: block;
+}
 .dot{
   position:absolute; width:10px; height:10px; border-radius:50%;
   background: linear-gradient(90deg, var(--accent), var(--accent-2));
