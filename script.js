@@ -72,7 +72,7 @@ function tick(){
   if(!deleting){
     ci++;
     typeEl.textContent = current.slice(0, ci);
-    if(ci === current.length){deleting = false; setTimeout(tick, 1200); return;}
+    if(ci === current.length){deleting = true; setTimeout(tick, 1200); return;}
     setTimeout(tick, 70);
   }else{
     ci--;
