@@ -64,8 +64,8 @@ const phrases = [
   'Open Source Enthusiast',
   'Problem Solver',
   'Python Developer'
-  '                 '
-];
+  ];
+.hero-subtitle { white-space: nowrap; }
 let pi = 0, ci = 0, deleting = false;
 function tick(){
   if(!typeEl) return;
