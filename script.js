@@ -74,8 +74,31 @@ function tick(){
     typeEl.textContent = current.slice(0, ci);
     if(ci === current.length){deleting = false; setTimeout(tick, 1200); return;}
     setTimeout(tick, 70);
+  }else{
+    ci--;
+    typeEl.textContent = current.slice(0, ci);
+    if(ci === 0){deleting = false; pi++; setTimeout(tick, 250); return;}
+    setTimeout(tick, 35);
   }
 }
+  measurer.style.position = 'absolute';
+  measurer.style.visibility = 'hidden';
+  measurer.style.whiteSpace = 'nowrap';
+  measurer.style.font = `${styles.fontStyle} ${styles.fontVariant} ${styles.fontWeight} ${styles.fontSize}/${styles.lineHeight} ${styles.fontFamily}`;
+  document.body.appendChild(measurer);
+
+  // phrases should be the same array you use in the typewriter
+  let max = 0;
+  for (const p of phrases) {
+    measurer.textContent = p;
+    max = Math.max(max, measurer.getBoundingClientRect().width);
+  }
+  document.body.removeChild(measurer);
+
+  el.style.display = 'inline-block';
+  el.style.whiteSpace = 'nowrap';
+  el.style.minWidth = Math.ceil(max) + 'px';
+})();
 setTimeout(tick, 600); 
 
 // Contact form client-side validation (no backend submit)
