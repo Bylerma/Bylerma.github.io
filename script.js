@@ -69,7 +69,14 @@ let pi = 0, ci = 0, deleting = false;
 function tick(){
   if(!typeEl) return;
   const current = phrases[pi % phrases.length];
-   
+  if(!deleting){
+    ci++;
+    typeEl.textContent = current.slice(0, ci);
+    if(ci === current.length){deleting = false; setTimeout(tick, 1200); return;}
+    setTimeout(tick, 70);
+  }
+}
+setTimeout(tick, 600); 
 
 // Contact form client-side validation (no backend submit)
 const form = document.getElementById('contact-form');
