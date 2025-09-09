@@ -37,6 +37,139 @@ body{
   line-height: 1.65;
 }
 
+/* College Section Styles */
+.college-info-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  align-items: center;
+}
+
+.college-content h3 {
+  font-size: 2rem;
+  font-weight: 700;
+  margin: 0 0 1.5rem;
+  color: var(--text);
+}
+
+.college-content p {
+  font-size: 1.1rem;
+  line-height: 1.7;
+  margin-bottom: 1.5rem;
+  color: var(--muted);
+}
+
+.college-features {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  margin: 2rem 0;
+}
+
+.feature {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.5rem;
+  background: var(--card);
+  border: 1px solid var(--stroke);
+  border-radius: 12px;
+  transition: all 0.3s ease;
+}
+
+.feature:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow);
+}
+
+.feature i {
+  font-size: 2rem;
+  color: var(--accent);
+  width: 3rem;
+  text-align: center;
+}
+
+.feature h4 {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin: 0 0 0.5rem;
+  color: var(--text);
+}
+
+.feature p {
+  margin: 0;
+  font-size: 1rem;
+  color: var(--muted);
+}
+
+.college-cta {
+  display: flex;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.college-stats-visual {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+}
+
+.college-stat-card {
+  text-align: center;
+  padding: 2rem 1.5rem;
+  background: linear-gradient(135deg, var(--accent), var(--accent-2));
+  border-radius: 16px;
+  color: white;
+  transition: all 0.3s ease;
+}
+
+.college-stat-card:hover {
+  transform: translateY(-5px) scale(1.05);
+}
+
+.stat-number-big {
+  font-size: 2.5rem;
+  font-weight: 800;
+  line-height: 1;
+  margin-bottom: 0.5rem;
+}
+
+.stat-label-big {
+  font-size: 1rem;
+  font-weight: 500;
+  opacity: 0.9;
+}
+
+@media (max-width: 768px) {
+  .college-info-grid {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  .college-content h3 {
+    font-size: 1.75rem;
+  }
+
+  .college-cta {
+    flex-direction: column;
+  }
+
+  .college-stats-visual {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .college-stat-card {
+    padding: 1.5rem 1rem;
+  }
+
+  .stat-number-big {
+    font-size: 2rem;
+  }
+}
+
+/* End College Section */
+
 /* Utilities */
 .container{width:min(1100px, 92%); margin-inline:auto}
 .section{padding: 88px 0}

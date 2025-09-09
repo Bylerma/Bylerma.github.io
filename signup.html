@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>SRMCEM Student Registration - Sign Up</title>
+  <meta name="description" content="Sign up for SRMCEM student portal - Register for SRM College of Engineering & Management courses and services." />
+  <meta property="og:title" content="SRMCEM Student Registration" />
+  <meta property="og:description" content="Official student registration portal for SRM College of Engineering & Management." />
+  <meta property="og:type" content="website" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="auth.css" />
+</head>
+<body>
+  <!-- Scroll progress -->
+  <div id="scroll-progress" aria-hidden="true"></div>
+
+  <!-- Header / Navbar -->
+  <header class="navbar">
+    <div class="nav-container">
+      <a href="index.html" class="brand">
+        <span class="brand-mark">S</span>
+        <span class="brand-text">SRMCEM Portal</span>
+      </a>
+
+      <nav class="nav-links" id="nav-links">
+        <a href="index.html" class="nav-link">Home</a>
+        <a href="signup.html" class="nav-link active">Sign Up</a>
+        <a href="login.html" class="nav-link">Login</a>
+        <a href="index.html#contact" class="nav-link">Contact</a>
+      </nav>
+
+      <div class="nav-actions">
+        <button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode">
+          <i class="fa-solid fa-moon"></i>
+          <i class="fa-solid fa-sun"></i>
+        </button>
+        <button class="hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false" aria-controls="nav-links">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="auth-main">
+    <div class="auth-container">
+      <div class="auth-card">
+        <div class="auth-header">
+          <div class="college-logo">
+            <i class="fa-solid fa-graduation-cap"></i>
+          </div>
+          <h1>SRMCEM Student Registration</h1>
+          <p>Join SRM College of Engineering & Management</p>
+        </div>
+
+        <form class="auth-form" id="signup-form">
+          <div class="form-section">
+            <h3><i class="fa-solid fa-user"></i> Personal Information</h3>
+            
+            <div class="form-row">
+              <div class="form-group">
+                <label for="firstName">First Name *</label>
+                <input type="text" id="firstName" name="firstName" required>
+              </div>
+              <div class="form-group">
+                <label for="lastName">Last Name *</label>
+                <input type="text" id="lastName" name="lastName" required>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="email">Email Address *</label>
+              <input type="email" id="email" name="email" required>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="phone">Phone Number *</label>
+                <input type="tel" id="phone" name="phone" required>
+              </div>
+              <div class="form-group">
+                <label for="dateOfBirth">Date of Birth *</label>
+                <input type="date" id="dateOfBirth" name="dateOfBirth" required>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="address">Address *</label>
+              <textarea id="address" name="address" rows="3" required></textarea>
+            </div>
+          </div>
+
+          <div class="form-section">
+            <h3><i class="fa-solid fa-graduation-cap"></i> Academic Information</h3>
+            
+            <div class="form-row">
+              <div class="form-group">
+                <label for="course">Course *</label>
+                <select id="course" name="course" required>
+                  <option value="">Select Course</option>
+                  <option value="btech-cse">B.Tech Computer Science Engineering</option>
+                  <option value="btech-ece">B.Tech Electronics & Communication</option>
+                  <option value="btech-mech">B.Tech Mechanical Engineering</option>
+                  <option value="btech-civil">B.Tech Civil Engineering</option>
+                  <option value="btech-eee">B.Tech Electrical & Electronics</option>
+                  <option value="mtech-cse">M.Tech Computer Science</option>
+                  <option value="mba">MBA</option>
+                  <option value="bca">BCA</option>
+                  <option value="mca">MCA</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="semester">Semester *</label>
+                <select id="semester" name="semester" required>
+                  <option value="">Select Semester</option>
+                  <option value="1">1st Semester</option>
+                  <option value="2">2nd Semester</option>
+                  <option value="3">3rd Semester</option>
+                  <option value="4">4th Semester</option>
+                  <option value="5">5th Semester</option>
+                  <option value="6">6th Semester</option>
+                  <option value="7">7th Semester</option>
+                  <option value="8">8th Semester</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="rollNumber">Preferred Roll Number</label>
+                <input type="text" id="rollNumber" name="rollNumber" placeholder="e.g., 21CSE001">
+              </div>
+              <div class="form-group">
+                <label for="admissionYear">Admission Year *</label>
+                <input type="number" id="admissionYear" name="admissionYear" min="2020" max="2030" required>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-section">
+            <h3><i class="fa-solid fa-lock"></i> Account Security</h3>
+            
+            <div class="form-group">
+              <label for="password">Password *</label>
+              <input type="password" id="password" name="password" required>
+              <small>Password must be at least 8 characters long</small>
+            </div>
+
+            <div class="form-group">
+              <label for="confirmPassword">Confirm Password *</label>
+              <input type="password" id="confirmPassword" name="confirmPassword" required>
+            </div>
+          </div>
+
+          <div class="form-section">
+            <h3><i class="fa-solid fa-file-text"></i> Additional Information</h3>
+            
+            <div class="form-group">
+              <label for="emergencyContact">Emergency Contact Name *</label>
+              <input type="text" id="emergencyContact" name="emergencyContact" required>
+            </div>
+
+            <div class="form-group">
+              <label for="emergencyPhone">Emergency Contact Phone *</label>
+              <input type="tel" id="emergencyPhone" name="emergencyPhone" required>
+            </div>
+
+            <div class="form-group">
+              <label for="previousEducation">Previous Education Details</label>
+              <textarea id="previousEducation" name="previousEducation" rows="3" placeholder="School/College name, percentage, year of passing"></textarea>
+            </div>
+          </div>
+
+          <div class="form-actions">
+            <div class="checkbox-group">
+              <input type="checkbox" id="terms" name="terms" required>
+              <label for="terms">I agree to the <a href="#" class="link">Terms & Conditions</a> and <a href="#" class="link">Privacy Policy</a></label>
+            </div>
+
+            <button type="submit" class="btn primary full-width">
+              <i class="fa-solid fa-user-plus"></i>
+              Create Account
+            </button>
+          </div>
+        </form>
+
+        <div class="auth-footer">
+          <p>Already have an account? <a href="login.html" class="link">Sign in here</a></p>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script src="script.js"></script>
+  <script src="auth.js"></script>
+</body>
+</html>
